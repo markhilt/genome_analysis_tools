@@ -3,6 +3,10 @@
 import argparse
 
 parser = argparse.ArgumentParser(description="Reads a fasta file and calculates N50.")
+parser.add_argument("-t", "--threshold", \
+                    help="Threshold for output statistics (50 for N50 and L50) [50]", \
+                    default = 50, \
+                    type = int)
 parser.add_argument("input_fasta", \
                     help="Input fasta file. Required.", \
                     type = str)
@@ -32,12 +36,12 @@ def seqLengths(fastafile):
         lengths.append(seqlen)
     return lengths
 
-def calcN50(length_list):
+def calcNX(length_list, threshold):
     '''
-    Calculate N50 from length_list
+    Calculate NX and LX from length_list
     '''
     length_list_sorted = sorted(length_list, reverse=True)
-    half_length = sum(length_list) / 2
+    threshold_length = sum(length_list) * threshold * 0.01
     n_contigs = 0
     tot_l = 0
 
@@ -45,7 +49,7 @@ def calcN50(length_list):
         n_contigs += 1
         tot_l += l
 
-        if tot_l >= half_length:
+        if tot_l >= threshold_length:
             return l, n_contigs
 
 def formatGenomeSize(size):
@@ -65,9 +69,13 @@ def main():
     lengths = seqLengths(args.input_fasta)
     longest = max(lengths)
     total = formatGenomeSize(sum(lengths))
-    n50, l50 = calcN50(lengths)
+    nX, lX = calcNX(lengths, args.threshold)
 
-    print("Total assembly size = {}\nNumber of scaffolds = {}\nN50 = {}\nL50 = {}\nLongest scaffold = {} bp".format(total, len(lengths), n50, l50, longest))
+    print("Total assembly size = {0}\n \
+    Number of scaffolds = {1}\n \
+    N{2} = {3}\n \
+    L{2} = {4}\n \
+    Longest scaffold = {5} bp".format(total, len(lengths), args.threshold, nX, lX, longest))
 
 if __name__ == "__main__":
     main()
