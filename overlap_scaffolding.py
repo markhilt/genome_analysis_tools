@@ -35,7 +35,7 @@ parser.add_argument("-o","--output", \
 parser.add_argument("-a","--alignment_preset", \
                     help="Minimap2 alignment present. Valid values: 'map-ont', 'map-pb'", \
                     default = "map-ont", type = str)
-parser.add_argument("-v","--version", help="Print version and quit.", action = "version", version = "overlap_scaffoling v. ".format(__version__))
+parser.add_argument("-v","--version", help="Print version and quit.", action = "version", version = "overlap_scaffoling v.{}".format(__version__))
 args = parser.parse_args()
 
 def chop_cigar(cigar):

@@ -6,7 +6,7 @@ This repo contains scripts that I frequenctly use in genome assembly analysis.
 
 **asm_cov_break.py** and **convert_mol_cov.py** are used to parse output from tigmint molecule to break assemblies in regions where 10X barcode coverage drops.
 
-**overlap_scaffoling.py** is used to build assembly scaffolds based linkage information. Two files are needed: a fasta file with assembled sequences to build scaffolds from, and a tab delimited text file that contains the linkage information. This file should look like, e.g.:
+**overlap_scaffoling.py** is used to build assembly scaffolds based on linkage information. Two files are needed: a fasta file with assembled sequences to build scaffolds from, and a tab delimited text file that contains the linkage information. This file should look like, e.g.:
 ```
 contig1f  contig34r
 contig2r  contig12f contig4f
